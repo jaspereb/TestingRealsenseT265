@@ -14,10 +14,12 @@ I construct the /tf tree in ROS so that there is a `world->t265_link` transform 
 
 After setting up the /tf tree the arm is run through 2 trajectories. The first is a cartesian one, moving along the x axis then the z axis (in an L shape). The second is a random trajectory with complicated orientation changes. For a final experiment I run the complicated trajectory again, but with the cameras on the T265 completely covered, to test how good the IMU is. Both paths are run at 100% of the default speed of the UR5 so these are roughly as fast as a human moves when completing repetitive motions.
 
+The cartesian path takes a total of 47.5s and the random path takes 28.5s.
+
 Each of these 3 experiments is recorded into a ROS bag. This is played into matlab where the `world->t265_link` and `world->t265_link_from_arm` are converted into X-Y-Z-Roll-Pitch-Yaw matrices called `camPose` and `armPose` respectively. The position coordinates are in meters, and the orientation is in radians and is converted using the `quat2eul` function. 
 
 ## Results Files
-For each of the 3 experiments, a .mat file is provided (in this repository, click the ‘View on GitHub’ button if you are on the Github Pages site). You can also use scipy.io to open these.
+For each of the 3 experiments, a .mat file is provided (in this repository, click the ‘View on GitHub’ button if you are on the Github Pages site). You can also use scipy.io to open these. A raw ROS bag of the /tf messages for each experiment is also provided.
 
 Overall the performance was not quite as good as I expected, showing errors of up to 10cm for periods of high acceleration. However the VSLAM loop closure does work and the tracking is good for periods of constant velocity, so long term drift should not be a problem in small environments.  
 
