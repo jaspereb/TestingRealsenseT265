@@ -23,14 +23,14 @@ Overall the performance was not quite as good as I expected, showing errors of u
 
 Basic plots of the results are below:
 ### Experiment 1: Cartesian Path
-[image](Exp1.png)
+![Image](Exp1.png)
 Note there are different axes scales.
 
 ### Experiment 2: Random Path
-[image](Exp2.png)
+![Image](Exp2.png)
 
 ### Experiment 1: Random Path and Blind
-[image](Exp3.png)
+![Image](Exp3.png)
 The angle tracking works fine as the gravity vector can be used to resolve orientation over time (provided it is not constantly orthogonal to one of the axes). The position tracking suffers from severe drift, showing how important the visual loop closure is. 
 
 
