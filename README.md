@@ -12,11 +12,33 @@ The T265 is mounted to the end of the arm using a 3D printed plate, approximatel
 
 I construct the /tf tree in ROS so that there is a `world->t265_link` transform which is the camera position built using the camera odometry, as well as a `world->t265_link_from_arm` transform which is the camera position built using the arm encoders. You can check the full /tf tree [here](frames.pdf).
 
-After setting up the /tf tree the arm is run through 2 trajectories. The first is a cartesian one, moving along the x axis then the z axis (in an L shape). The second is a random trajectory with complicated orientation changes. For a final experiment I run the complicated trajectory again, but with the cameras on the T265 completely covered, to test how good the IMU is. 
+After setting up the /tf tree the arm is run through 2 trajectories. The first is a cartesian one, moving along the x axis then the z axis (in an L shape). The second is a random trajectory with complicated orientation changes. For a final experiment I run the complicated trajectory again, but with the cameras on the T265 completely covered, to test how good the IMU is. Both paths are run at 100% of the default speed of the UR5 so these are roughly as fast as a human moves when completing repetitive motions.
 
-Each of these 3 experiments is recorded into a ROS bag. This is played into matlab where the `world->t265_link` and `world->t265_link_from_arm` are converted into X-Y-Z-Roll-Pitch-Yaw matrices called `camPose` and `armPose` respectively. 
+Each of these 3 experiments is recorded into a ROS bag. This is played into matlab where the `world->t265_link` and `world->t265_link_from_arm` are converted into X-Y-Z-Roll-Pitch-Yaw matrices called `camPose` and `armPose` respectively. The position coordinates are in meters, and the orientation is in radians and is converted using the `quat2eul` function. 
 
 ## Results Files
-Included in the repo are matlab files for each of the experiment runs. These are arrays of the 6 DoF pose over time as estimated from the arm encoders, and from the T265. You can also use scipy.io to open these.
+For each of the 3 experiments, a .mat file is provided (in this repository, click the ‘View on GitHub’ button if you are on the Github Pages site). You can also use scipy.io to open these.
+
+Overall the performance was not quite as good as I expected, showing errors of up to 10cm for periods of high acceleration. However the VSLAM loop closure does work and the tracking is good for periods of constant velocity, so long term drift should not be a problem in small environments.  
+
+Basic plots of the results are below:
+### Experiment 1: Cartesian Path
+[image](Exp1.png)
+Note there are different axes scales.
+
+### Experiment 2: Random Path
+[image](Exp2.png)
+
+### Experiment 1: Random Path and Blind
+[image](Exp3.png)
+The angle tracking works fine as the gravity vector can be used to resolve orientation over time (provided it is not constantly orthogonal to one of the axes). The position tracking suffers from severe drift, showing how important the visual loop closure is. 
+
 
 ## Caveats
+Some limitations/considerations of this experiment 
+
+-It is in a static environment with good lighting and texture, there are no moving objects in the frame.
+
+-The /tf chain will not be perfect, but calibration errors should be <1mm
+
+-This is on a smooth robot arm, bouncy platforms will perform worse 
