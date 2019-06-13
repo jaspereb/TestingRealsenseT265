@@ -1,7 +1,7 @@
 # Testing the Realsense T265 Accuracy
 Some brief results of tracking accuracy tests that I ran with the Realsense T265 V-SLAM camera
 
-In June 2019 I ran some tests of the T265 mounted to a UR5 robotic arm, trying to assess the accuracy of this camera. As of writing I could not find any actual figures on how well the tracking of this camera performs, Intel mentions a *generous* figure of 1 percent in one of their support responses [here](https://www.intel.com/content/www/us/en/support/articles/000032899/emerging-technologies/intel-realsense-technology.html). 
+In June 2019 I ran some tests of the T265 mounted to a UR5 robotic arm, trying to assess the accuracy of this camera. As of writing I could not find any actual figures online for how well the tracking of this camera performs, Intel mentions a *generous* figure of 1 percent in one of their support responses [here](https://www.intel.com/content/www/us/en/support/articles/000032899/emerging-technologies/intel-realsense-technology.html). So I decided to publish the raw data I collected and some basic analysis, for anyone else who is considering using this camera.
 
 ## Experiment Setup
 To get a ground truth I have a UR5 cobot arm mounted to a table in a lab setting. There is plenty of texture and good lighting for the T265 to operate with. 
